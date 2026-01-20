@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watchEffect } from 'vue';
+import { computed, onMounted, ref, toRefs, watchEffect } from 'vue';
 import CanvasComponentView from '@/components/canvas/CanvasComponent/CanvasComponentView.vue';
 import type { CanvasComponentProps, CanvasComponentRef } from '@/components/canvas/CanvasComponent/types';
 import { useCanvasState } from '@/components/canvas/CanvasComponent/composables/useCanvasState';
@@ -483,13 +483,8 @@ const methods: CanvasComponentRef = {
   canRedo: controllerBase.historyActions.canRedo(),
 };
 
-const width = props.width;
-const height = props.height;
-const backgroundColor = props.backgroundColor ?? '#ffffff';
-const pageWidth = props.pageWidth;
-const pageHeight = props.pageHeight;
-const pageCountX = props.pageCountX;
-const pageCountY = props.pageCountY;
+const { width, height, pageWidth, pageHeight, pageCountX, pageCountY } = toRefs(props);
+const backgroundColor = computed(() => props.backgroundColor ?? '#ffffff');
 
 const handleCanvasMouseDown = canvasMouse.handleCanvasMouseDown;
 const handleMouseMove = pointerMove;
